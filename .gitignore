@@ -5,6 +5,10 @@
 /tmp
 /out-tsc
 
+/public
+
+oj-client/dist/
+
 # dependencies
 node_modules/
 
