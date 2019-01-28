@@ -35,27 +35,50 @@ var problems = [
     }
 ];
 
+// store the infomation of problems in mongodb
+var ProblemModel = require("../models/problemModel");
+
+
 var getProblems = function () {
   return new Promise((resolve, reject) => {
-    resolve(problems);
+    // retrieve the data from db
+    ProblemModel.find({}, function (err, problems) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(problems);
+      }
+    });
   });
 }
 
 var getProblem = function (id) {
   return new Promise((resolve, reject) => {
-    resolve(problems.find(problem => problem.id === id));
+    // retrieve the specific problem
+    ProblemModel.findOne({ id: id}, function (err, problem) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(problem);
+      }
+    });
   });
 }
 
 var addProblem = function (newProblem) {
   return new Promise((resolve, reject) => {
-    if (problems.find(problem => problem.name === newProblem.name)) {
-      reject("Problem already exists!");
-    } else {
-      newProblem.id = problems.length + 1;
-      problems.push(newProblem);
-      resolve(newProblem);
-    }
+    ProblemModel.findOne({ name: newProblem.name }, function (err, problem) {
+      if (problem) {
+        reject("Problem name already exists!");
+      } else {
+        ProblemModel.count({}, function (err, num) {
+          newProblem.id = num + 1;
+          var mongoProblem = new ProblemModel(newProblem);
+          mongoProblem.save();
+          resolve(newProblem);
+        });
+      }
+    });
   });
 }
 
