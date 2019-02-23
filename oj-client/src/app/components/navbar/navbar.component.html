@@ -13,7 +13,7 @@
         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <button ctype="button" class="btn btn-primary">Sign in</button>
+        <button ctype="button" class="btn btn-primary" (click)="login()">Sign in</button>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -24,7 +24,7 @@
           <a class="dropdown-item" href="#">My Favorites</a>
           <a class="dropdown-item" href="#">My Submissions</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Log Out</a>
+          <a class="dropdown-item" href="#" (click)="logout()">Log Out</a>
         </div>
       </li>
       <li class="nav-item">

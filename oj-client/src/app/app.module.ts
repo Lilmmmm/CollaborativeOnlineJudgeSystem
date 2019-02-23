@@ -10,6 +10,7 @@ import { ProblemListComponent } from './components/problem-list/problem-list.com
 import { ProblemDetailComponent } from './components/problem-detail/problem-detail.component';
 
 import { DataService } from "./services/data.service";
+import { AuthService } from "./services/auth.service";
 import { NewProblemComponent } from './components/new-problem/new-problem.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -33,6 +34,10 @@ import { HttpClientModule } from '@angular/common/http';
   providers: [{
     provide: "data",
     useClass: DataService
+  },
+  {
+    provide: "auth",
+    useClass: AuthService
   }],
   bootstrap: [AppComponent]
 })

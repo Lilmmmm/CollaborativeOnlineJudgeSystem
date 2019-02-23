@@ -1,12 +1,15 @@
 .difficulty{
-  min-width: 65px;
+  min-width: 55px !important;
+  font-family: Georgia;
+  display: inline-block !important;
+  text-align: center;
   margin-right: 10px;
 }
 
 .label.difficulty {
   padding-top: 0.6em;
   color: #fbfdfa;
-  font-size: 12px;
+  font-size: 15px;
 }
 
 .title {

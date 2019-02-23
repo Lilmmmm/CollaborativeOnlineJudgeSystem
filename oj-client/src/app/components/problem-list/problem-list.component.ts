@@ -24,4 +24,8 @@ export class ProblemListComponent implements OnInit {
                                           .subscribe(problems => this.problems = problems);
   }
 
+  ngOnDestroy() {
+    // To avoid memory leak
+    this.subscriptionProblems.unsubscribe();
+  }
 }
