@@ -1,7 +1,4 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { Router } from '@angular/router';
-
-import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-navbar',
@@ -12,31 +9,39 @@ export class NavbarComponent implements OnInit {
 
   title = "MYL";
 
-  username = "Ace";
+  username = "";
+
+  profile: any;
 
   constructor( @Inject('auth') private auth) { }
 
   ngOnInit() {
-
-    // show username if logging in
-    // if (this.auth.authenticated()) {
-    //   this.username = this.auth.getProfile().nickname;
-    // }
-
-
+    if (this.isAuthenticated()) {
+      this.username = this.auth.getProfileName().nickname;
+    }
   }
 
   login(): void {
-    // this.auth.login().then((profile) => {
-    //   this.username = profile.nickname;
-    // });
     this.auth.login();
+    if (this.isAuthenticated()) {
+      this.username = this.auth.getProfileName().nickname;
+    }
   }
 
   logout(): void {
     this.auth.logout();
+    this.username = "";
   }
 
+  isAuthenticated(): boolean {
+    return this.auth.isAuthenticated();
+  }
+
+  getName(): void {
+    if (this.isAuthenticated()) {
+      this.username = this.auth.getProfileName().nickname;
+    }
+  }
   // redirect to problems page and show search results
   // searchProblem(): void {
   //   this.router.navigate(['/problems']);

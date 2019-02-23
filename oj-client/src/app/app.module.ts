@@ -15,7 +15,6 @@ import { NewProblemComponent } from './components/new-problem/new-problem.compon
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HttpClientModule } from '@angular/common/http';
 
-
 @NgModule({
   declarations: [
     AppComponent,
