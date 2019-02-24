@@ -16,6 +16,7 @@ import { NewProblemComponent } from './components/new-problem/new-problem.compon
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ProfileComponent } from './components/profile/profile.component';
+import { EditorComponent } from './components/editor/editor.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     ProblemDetailComponent,
     NewProblemComponent,
     NavbarComponent,
-    ProfileComponent
+    ProfileComponent,
+    EditorComponent
   ],
   imports: [
     BrowserModule,
