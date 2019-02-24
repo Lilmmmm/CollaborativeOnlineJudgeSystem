@@ -3,6 +3,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import * as auth0 from 'auth0-js';
+import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 
 declare var Auth0Lock : any;
 @Injectable({
@@ -28,7 +29,7 @@ export class AuthService {
     scope: 'openid profile'
   });
 
-  constructor(public router: Router) {
+  constructor(public router: Router, private http: HttpClient) {
     this._idToken = '';
     this._accessToken = '';
     this._expiresAt = 0;
@@ -124,7 +125,30 @@ export class AuthService {
  }
 
 
- public getProfileName(): Object {
+ public getProfileName() {
    return JSON.parse(localStorage.getItem('profile'));
+ }
+
+ public resetPassword(): void {
+   let profile = this.getProfileName();
+   let email = profile.name;
+   let url: string = `https://${this.domain}/dbconnections/change_password`;
+   let options = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
+   let body = {
+     client_id: this.clientId,
+     email: email,
+     connection: 'Username-Password-Authentication'
+   };
+
+   this.http.post(url, body, options)
+                     .toPromise()
+                     .catch(err => console.log(err));
+
+ }
+
+ // Error handler
+ private handleError(error: any): Promise<any> {
+   console.error('An error occurred', error);  // use for demo debug
+   return Promise.reject(error.message || error);
  }
 }

@@ -14,6 +14,7 @@ import { AuthService } from "./services/auth.service";
 import { NewProblemComponent } from './components/new-problem/new-problem.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { HttpClientModule } from '@angular/common/http';
     ProblemListComponent,
     ProblemDetailComponent,
     NewProblemComponent,
-    NavbarComponent
+    NavbarComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

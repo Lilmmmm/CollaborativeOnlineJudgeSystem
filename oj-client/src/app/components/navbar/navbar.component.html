@@ -15,16 +15,16 @@
       <li class="nav-item">
         <button ctype="button" class="btn btn-primary" *ngIf="!isAuthenticated()" (click)="login()">Sign in</button>
       </li>
-      <li class="nav-item dropdown">
+      <li class="nav-item dropdown"  *ngIf="isAuthenticated()">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="getName()">
           {{username}}
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">My Profile</a>
+          <a class="dropdown-item" routerLink="/profile">My Profile</a>
           <a class="dropdown-item" href="#">My Favorites</a>
           <a class="dropdown-item" href="#">My Submissions</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#" *ngIf="isAuthenticated()" (click)="logout()">Log Out</a>
+          <a class="dropdown-item" href="#" (click)="logout()">Log Out</a>
         </div>
       </li>
       <li class="nav-item">
