@@ -68,13 +68,20 @@ export class EditorComponent implements OnInit {
     // only get diff of code, not all the code
     this.editor.lastAppliedChange = null;
 
-    // bind editor with socket
+    // bind editor with socket, when change in the editor, sync all participants
     this.editor.on('change', (e) => {
       console.log('editor changes" ' + JSON.stringify(e));
       if (this.editor.lastAppliedChange != e) {
         this.collaboration.change(JSON.stringify(e));
       }
     });
+
+    // sync the position of cursor in the editor
+    this.editor.getSession().getSelection().on("changeCursor", () => {
+      let cursor = this.editor.getSession().getSelection().getCursor();
+      console.log('cursor moves: ' + JSON.stringify(cursor));
+      this.collaboration.cursorMove(JSON.stringify(cursor));
+    })
   }
 
   setLanguage(language: string): void {
