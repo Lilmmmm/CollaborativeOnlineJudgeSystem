@@ -73,4 +73,10 @@ export class CollaborationService {
   cursorMove(cursor: Object): void {
     this.collaborationSocket.emit("cursorMove", cursor);
   }
+
+
+  // send all the events to the new add-in user in a editor
+  restoreBuffer(): void {
+    this.collaborationSocket.emit("restoreBuffer");
+  }
 }
