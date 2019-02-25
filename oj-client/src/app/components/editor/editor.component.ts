@@ -1,5 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 
+import { ActivatedRoute, Params } from '@angular/router';
+
 declare var ace: any;
 
 @Component({
@@ -14,6 +16,8 @@ export class EditorComponent implements OnInit {
 
   public languages: string[] = ['Java', 'C++', 'Python'];
   language: string = 'Java';  // default language
+
+  sessionId: string;
 
   defaultContent = {
     'Java': `public class Example {
@@ -33,9 +37,19 @@ export class EditorComponent implements OnInit {
     # Write your Python code here`
   };
 
-  constructor(@Inject('collaboration') private collaboration) { }
+  constructor(@Inject('collaboration') private collaboration,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
+    // use id to distinguish collaboration place
+    this.route.params.subscribe(params => {
+      this.sessionId = params['id'];
+      this.initEditor();
+    });
+
+  }
+
+  initEditor() {
     this.editor = ace.edit('editor');
     this.editor.setTheme('ace/theme/eclipse');
     this.resetEditor();
@@ -45,9 +59,22 @@ export class EditorComponent implements OnInit {
     // if code exceed more than one page, we need to set to int
     this.editor.$blockScrolling = Infinity;
 
-    // use for collaborationSocket
-    this.collaboration.init();
+    // once come into the problem page, the mouse focus in the editor, could immediately begin Write
+    document.getElementsByTagName('textarea')[0].focus();
 
+    // use for collaborationSocket
+    this.collaboration.init(this.editor, this.sessionId);
+
+    // only get diff of code, not all the code
+    this.editor.lastAppliedChange = null;
+
+    // bind editor with socket
+    this.editor.on('change', (e) => {
+      console.log('editor changes" ' + JSON.stringify(e));
+      if (this.editor.lastAppliedChange != e) {
+        this.collaboration.change(JSON.stringify(e));
+      }
+    });
   }
 
   setLanguage(language: string): void {
