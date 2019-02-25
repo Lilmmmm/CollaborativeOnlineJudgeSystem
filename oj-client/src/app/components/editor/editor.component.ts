@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 
 declare var ace: any;
 
@@ -33,7 +33,7 @@ export class EditorComponent implements OnInit {
     # Write your Python code here`
   };
 
-  constructor() { }
+  constructor(@Inject('collaboration') private collaboration) { }
 
   ngOnInit() {
     this.editor = ace.edit('editor');
@@ -45,6 +45,8 @@ export class EditorComponent implements OnInit {
     // if code exceed more than one page, we need to set to int
     this.editor.$blockScrolling = Infinity;
 
+    // use for collaborationSocket
+    this.collaboration.init();
 
   }
 
