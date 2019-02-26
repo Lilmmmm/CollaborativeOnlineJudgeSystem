@@ -13,10 +13,15 @@ export class ProblemListComponent implements OnInit {
   problems: Problem[] = [];
   subscriptionProblems: Subscription;
 
-  constructor(@Inject("data") private data) { }
+  searchTerm: string = '';
+  subscriptionInput: Subscription;
+
+  constructor(@Inject("data") private data,
+              @Inject("input") private input) { }
 
   ngOnInit() {
     this.getProblems();
+    this.getSearchTerm()
   }
 
   getProblems(): void {
@@ -24,8 +29,14 @@ export class ProblemListComponent implements OnInit {
                                           .subscribe(problems => this.problems = problems);
   }
 
+  getSearchTerm(): void {
+    this.subscriptionInput = this.input.getInput().subscribe(
+      inputTerm => this.searchTerm = inputTerm
+    );
+  }
   ngOnDestroy() {
     // To avoid memory leak
     this.subscriptionProblems.unsubscribe();
+    this.subscriptionInput.unsubscribe();
   }
 }
